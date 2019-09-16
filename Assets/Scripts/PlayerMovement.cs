@@ -9,14 +9,13 @@ public class PlayerMovement:MonoBehaviour {
 
     private new Transform transform;
     [SerializeField]
-    private Rigidbody2D body;
-    private Input inputs;
+    private Rigidbody2D body = null;
 
     private void Awake() {
         transform = base.transform;
         Input inputs = InputMain.GetOrCreate();
-        inputs.Player.Move.performed += MovePerformed;
-        inputs.Player.Run.performed += RunPerformed;
+        inputs.Movement.Move.performed += MovePerformed;
+        inputs.Movement.Run.performed += RunPerformed;
     }
 
     private void FixedUpdate() {
