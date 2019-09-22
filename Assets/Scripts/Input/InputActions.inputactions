@@ -1,0 +1,209 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "31a71b1c-c2f2-426f-a6da-685d56abc226",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "d774078d-7fd8-4162-b64e-ebe925547ee6",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Run",
+                    "type": "PassThrough",
+                    "id": "976ff062-81ce-4a93-8f7c-7eccf6cfd3e3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "899985f5-2d0e-489a-8a5b-1195c0af7854",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdc21a69-8bee-42f2-b11c-b09e4b91ed1b",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AbilitySelect",
+            "id": "626f8b57-2c9e-4450-9d2a-a82a89c7a86a",
+            "actions": [
+                {
+                    "name": "Four",
+                    "type": "Button",
+                    "id": "a99649ef-cc22-4d8a-84c7-68d52abef1a0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Three",
+                    "type": "Button",
+                    "id": "6e7fa403-be53-4d39-989c-b49427d54948",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Two",
+                    "type": "Button",
+                    "id": "5fda7a97-b288-41a1-942a-703c599cd96b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "One",
+                    "type": "Button",
+                    "id": "6a92d8f7-2ef4-4009-973a-9b37e52ad197",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8f4c7e71-a3a1-444a-b5a5-ea2f5715c3e5",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "One",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64dba7f9-91e2-4216-8437-0cb747800759",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Two",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4641282e-004b-41e8-9e9c-7b7dda9595a8",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Three",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f0c7153-e13b-4c4e-9a7b-443156444353",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Four",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AbilityUse",
+            "id": "51956bc0-f46d-4aac-81e1-c9977d91d4f3",
+            "actions": [
+                {
+                    "name": "Use",
+                    "type": "PassThrough",
+                    "id": "f1d9b54b-3b69-47c6-9fbe-5c4a79a409fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Aim",
+                    "type": "PassThrough",
+                    "id": "ed8c2c8c-186b-458d-bd8f-be00f50d1df4",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c27da21a-9126-4e47-94cf-55700554b7fa",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9d8eab2-c180-4060-8617-f18226f1a766",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Build",
+            "id": "14774b1b-a101-4da1-bfc5-c9431c5b15f1",
+            "actions": [
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "d595f62e-ea9d-4ce4-8b39-13d9c8d00f58",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8621ca52-948b-469b-9824-eeb4e4ffa1a9",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
