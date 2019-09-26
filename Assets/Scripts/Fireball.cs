@@ -12,13 +12,13 @@ public struct FireballSpawn:IComponentData {
 
 public class FireballSpawnSystem:ComponentSystem {
 
-    private UnityEngine.GameObject fireballObj;
+    private UnityEngine.GameObject gObj;
     private EntityQuery query;
     private EntityCommandBufferSystem commands;
 
     protected override void OnCreate() {
         base.OnCreate();
-        fireballObj = UnityEngine.Resources.Load<UnityEngine.GameObject>("fireball");
+        gObj = UnityEngine.Resources.Load<UnityEngine.GameObject>("fireball");
         query = GetEntityQuery(new ComponentType[] {
             ComponentType.ReadWrite<FireballSpawn>(),
             ComponentType.ReadOnly<Translation>(),
@@ -31,9 +31,12 @@ public class FireballSpawnSystem:ComponentSystem {
         using(NativeArray<FireballSpawn> fireballs = query.ToComponentDataArray<FireballSpawn>(Allocator.TempJob))
         using(NativeArray<Translation> translations = query.ToComponentDataArray<Translation>(Allocator.TempJob)) {
             for(int i = 0; i < len; i++) {
-                UnityEngine.GameObject obj = UnityEngine.Object.Instantiate(fireballObj, translations[i].Value + new float3 { x = fireballs[i].Direction.x * 1.5f, y = fireballs[i].Direction.y * 1.5f }, quaternion.identity);
-                obj.GetComponent<UnityEngine.Rigidbody2D>().velocity = fireballs[i].Direction * 5;
-            }
+                UnityEngine.GameObject obj = UnityEngine.Object.Instantiate(gObj, translations[i].Value, quaternion.identity);
+				FireballEntity fireballEntity = obj.GetComponent<FireballEntity>();
+				Projectile projectile = fireballEntity.Projectile;
+				projectile.Angle = math.atan2(fireballs[i].Direction.x, fireballs[i].Direction.y);
+				fireballEntity.Projectile = projectile;
+			}
         }
         commands.CreateCommandBuffer().RemoveComponent(query, ComponentType.ReadWrite<FireballSpawn>());
     }

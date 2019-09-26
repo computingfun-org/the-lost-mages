@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Entities;
+﻿using Unity.Entities;
 using UnityEngine;
 
 public class Scrap : MonoBehaviour {
 
-    [SerializeField]
-    Blueprint blueprintPrefab;
+	GOEntity player;
+	EntityManager entityManager;
+	AbilitySwitcherSystem abilitySwitcherSystem;
 
-    private void Start() {
-        Player.PlayerConvert player = FindObjectOfType<Player.PlayerConvert>();
-        PlayerFireball playerFireball = new PlayerFireball();
-        playerFireball.playerEntity = player.entity;
-        playerFireball.entityManager = player.manager;
-        World.Active.GetOrCreateSystem<Player.PlayerAbilitySystem>().Abilities[0] = playerFireball;
-        PlayerBlueprint playerBlueprint = new PlayerBlueprint();
-        playerBlueprint.prefab = blueprintPrefab;
-        World.Active.GetOrCreateSystem<Player.PlayerAbilitySystem>().Abilities[1] = playerBlueprint;
-    }
+    void Start() {
+		player = FindObjectOfType<PlayerEntity>();
+		entityManager = World.Active.EntityManager;
+		abilitySwitcherSystem = entityManager.World.GetOrCreateSystem<AbilitySwitcherSystem>();
+		abilitySwitcherSystem.abilities[0] = new FireballAbility(player.entity, player.manager, new CoolDown { Value = 0.3f });
+		abilitySwitcherSystem.abilities[1] = BlueprintAbilities.NewDebugCastle(player.transform);
+		abilitySwitcherSystem.abilities[2] = BlueprintAbilities.NewDebugCity(player.transform);
+	}
 }

@@ -150,6 +150,14 @@
                     "expectedControlType": "Stick",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "AimPress",
+                    "type": "PassThrough",
+                    "id": "e578df0d-33f2-4c6c-af96-f76b35416152",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -172,6 +180,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b153a160-eb13-403a-869a-f028a538735c",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AimPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

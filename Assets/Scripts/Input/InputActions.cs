@@ -164,6 +164,14 @@ namespace Input
                     ""expectedControlType"": ""Stick"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AimPress"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e578df0d-33f2-4c6c-af96-f76b35416152"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -186,6 +194,17 @@ namespace Input
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b153a160-eb13-403a-869a-f028a538735c"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AimPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -235,6 +254,7 @@ namespace Input
             m_AbilityUse = asset.GetActionMap("AbilityUse");
             m_AbilityUse_Use = m_AbilityUse.GetAction("Use");
             m_AbilityUse_Aim = m_AbilityUse.GetAction("Aim");
+            m_AbilityUse_AimPress = m_AbilityUse.GetAction("AimPress");
             // Build
             m_Build = asset.GetActionMap("Build");
             m_Build_Menu = m_Build.GetAction("Menu");
@@ -387,12 +407,14 @@ namespace Input
         private IAbilityUseActions m_AbilityUseActionsCallbackInterface;
         private readonly InputAction m_AbilityUse_Use;
         private readonly InputAction m_AbilityUse_Aim;
+        private readonly InputAction m_AbilityUse_AimPress;
         public struct AbilityUseActions
         {
             private Actions m_Wrapper;
             public AbilityUseActions(Actions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Use => m_Wrapper.m_AbilityUse_Use;
             public InputAction @Aim => m_Wrapper.m_AbilityUse_Aim;
+            public InputAction @AimPress => m_Wrapper.m_AbilityUse_AimPress;
             public InputActionMap Get() { return m_Wrapper.m_AbilityUse; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -408,6 +430,9 @@ namespace Input
                     Aim.started -= m_Wrapper.m_AbilityUseActionsCallbackInterface.OnAim;
                     Aim.performed -= m_Wrapper.m_AbilityUseActionsCallbackInterface.OnAim;
                     Aim.canceled -= m_Wrapper.m_AbilityUseActionsCallbackInterface.OnAim;
+                    AimPress.started -= m_Wrapper.m_AbilityUseActionsCallbackInterface.OnAimPress;
+                    AimPress.performed -= m_Wrapper.m_AbilityUseActionsCallbackInterface.OnAimPress;
+                    AimPress.canceled -= m_Wrapper.m_AbilityUseActionsCallbackInterface.OnAimPress;
                 }
                 m_Wrapper.m_AbilityUseActionsCallbackInterface = instance;
                 if (instance != null)
@@ -418,6 +443,9 @@ namespace Input
                     Aim.started += instance.OnAim;
                     Aim.performed += instance.OnAim;
                     Aim.canceled += instance.OnAim;
+                    AimPress.started += instance.OnAimPress;
+                    AimPress.performed += instance.OnAimPress;
+                    AimPress.canceled += instance.OnAimPress;
                 }
             }
         }
@@ -471,6 +499,7 @@ namespace Input
         {
             void OnUse(InputAction.CallbackContext context);
             void OnAim(InputAction.CallbackContext context);
+            void OnAimPress(InputAction.CallbackContext context);
         }
         public interface IBuildActions
         {

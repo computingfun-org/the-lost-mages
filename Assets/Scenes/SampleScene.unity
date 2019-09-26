@@ -237,11 +237,11 @@ GameObject:
   m_Component:
   - component: {fileID: 488747142}
   - component: {fileID: 488747141}
-  - component: {fileID: 488747140}
   - component: {fileID: 488747139}
   - component: {fileID: 488747143}
-  - component: {fileID: 488747145}
   - component: {fileID: 488747144}
+  - component: {fileID: 488747145}
+  - component: {fileID: 488747140}
   m_Layer: 8
   m_Name: player
   m_TagString: Untagged
@@ -279,10 +279,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 488747138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a72a518d9e26746aad8f120c473e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 73bb910f15dfa5043a78cabe5c9b3169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transform: {fileID: 488747142}
+  entity: {fileID: 488747145}
   body: {fileID: 488747139}
 --- !u!212 &488747141
 SpriteRenderer:
@@ -386,7 +386,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 488747138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8466917686a44dc4d81b414d300a8e33, type: 3}
+  m_Script: {fileID: 11500000, guid: c690b363b8219e84b84c4d9ab7097531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028
@@ -442,7 +442,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

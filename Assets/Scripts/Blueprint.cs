@@ -3,38 +3,39 @@
 public class Blueprint : MonoBehaviour {
 
     [SerializeField]
-    GameObject Object;
+    GameObject prefab = null;
 
     [SerializeField]
-    new SpriteRenderer renderer;
+    SpriteRenderer sprite = null;
 
     Color baseColor;
 
     [SerializeField]
-    Color overlapColor;
+    Color overlapColor = Color.red;
+
     private int overlaps;
 
     private void Awake() {
-        baseColor = renderer.color;
+        baseColor = sprite.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         overlaps++;
-        renderer.color = overlapColor;
+        sprite.color = overlapColor;
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         overlaps--;
         if (overlaps == 0) {
-            renderer.color = baseColor;
+            sprite.color = baseColor;
         }
     }
 
     public bool Place() {
-        if (overlaps != 0) {
+        if (Overlapping) {
             return false;
         }
-        Instantiate(Object, transform.position, Quaternion.identity);
+        Instantiate(prefab, transform.position, Quaternion.identity);
         return true;
     }
 
