@@ -31,11 +31,11 @@ public class PlayerMovementSystem:JobComponentSystem {
 		}
 	}
 
-	Input.Actions inputs;
+	Inputs.Actions inputs;
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		inputs = new Input.Actions();
+		inputs = new Inputs.Actions();
 		inputs.Movement.Move.performed += MovePerformed;
 		inputs.Movement.Run.performed += RunPerformed;
 	}

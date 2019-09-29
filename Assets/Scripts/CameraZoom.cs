@@ -8,12 +8,12 @@ public class CameraZoom:MonoBehaviour {
 	public float MaxRange;
 
 	[SerializeField]
-	new Camera camera = null;
-	Input.Actions inputActions;
+	Camera cam = null;
+	Inputs.Actions inputActions;
 	float input;
 
 	void Awake() {
-		inputActions = new Input.Actions();
+		inputActions = new Inputs.Actions();
 		inputActions.Camera.Zoom.performed += ZoomPerformed;
 	}
 
@@ -31,9 +31,9 @@ public class CameraZoom:MonoBehaviour {
 		input = ctx.ReadValue<float>();
 
 	void Update() {
-		float zoom = camera.orthographicSize;
+		float zoom = cam.orthographicSize;
 		zoom -= input * Speed * Time.deltaTime;
 		zoom = math.clamp(zoom, MinRange, MaxRange);
-		camera.orthographicSize = zoom;
+		cam.orthographicSize = zoom;
 	}
 }

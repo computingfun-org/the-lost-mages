@@ -4,14 +4,14 @@ using UnityEngine.InputSystem;
 
 public class BuildMenuSystem:ComponentSystem, IAbility {
 
-	Input.Actions inputs;
+	Inputs.Actions inputs;
 	AbilitySystem abilitySystem;
 	EntityQuery itemsQuery;
 	EntityQuery displayQuery;
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		inputs = new Input.Actions();
+		inputs = new Inputs.Actions();
 		inputs.Build.Menu.performed += Performed;
 		abilitySystem = World.GetOrCreateSystem<AbilitySystem>();
 		itemsQuery = GetEntityQuery(new ComponentType[] {

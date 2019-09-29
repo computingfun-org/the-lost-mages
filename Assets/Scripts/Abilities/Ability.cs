@@ -65,11 +65,11 @@ public class AbilitySystem:ComponentSystem {
 	void AimPress(InputAction.CallbackContext context) => ability.AimPress(context);
 	void Trigger(InputAction.CallbackContext context) => ability.Trigger(context);
 
-	Input.Actions inputs;
+	Inputs.Actions inputs;
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		inputs = new Input.Actions();
+		inputs = new Inputs.Actions();
 		inputs.AbilityUse.AimPress.performed += AimPress;
 		inputs.AbilityUse.Aim.performed += Aim;
 		inputs.AbilityUse.Use.performed += Trigger;
@@ -133,12 +133,12 @@ public class AbilitySelect4System:ComponentSystem {
 	void Select3(InputAction.CallbackContext context) => Select3();
 
 	AbilitySystem abilitySystem;
-	Input.Actions inputs;
+	Inputs.Actions inputs;
 
 	protected override void OnCreate() {
 		base.OnCreate();
 		abilitySystem = World.GetOrCreateSystem<AbilitySystem>();
-		inputs = new Input.Actions();
+		inputs = new Inputs.Actions();
 		inputs.AbilitySelect.One.performed += Select0;
 		inputs.AbilitySelect.Two.performed += Select1;
 		inputs.AbilitySelect.Three.performed += Select2;
