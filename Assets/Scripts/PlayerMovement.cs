@@ -1,4 +1,5 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -13,22 +14,18 @@ public struct Movement:IComponentData {
 public class PlayerMovementSystem:JobComponentSystem {
 
 	[RequireComponentTag(typeof(Player))]
-	struct PlayerWalkMovementJob:IJobForEach<Movement, TranslationBody> {
-
+	struct WalkJob:IJobForEach<Movement, TranslationBody> {
 		public float deltaTime;
 		public float2 direction;
-
 		public void Execute([ReadOnly] ref Movement m, ref TranslationBody t) {
 			t.Position += direction * m.WalkSpeed * deltaTime;
 		}
 	}
 
 	[RequireComponentTag(typeof(Player))]
-	struct PlayerRunMovementJob:IJobForEach<Movement, TranslationBody> {
-
+	struct RunJob:IJobForEach<Movement, TranslationBody> {
 		public float deltaTime;
 		public float2 direction;
-
 		public void Execute([ReadOnly] ref Movement m, ref TranslationBody t) {
 			t.Position += direction * m.RunSpeed * deltaTime;
 		}
@@ -69,7 +66,7 @@ public class PlayerMovementSystem:JobComponentSystem {
 
 	protected override JobHandle OnUpdate(JobHandle inputDeps) {
 		return run ?
-		new PlayerRunMovementJob { deltaTime = Time.deltaTime, direction = direction }.Schedule(this, inputDeps) :
-		new PlayerWalkMovementJob { deltaTime = Time.deltaTime, direction = direction }.Schedule(this, inputDeps);
+		new RunJob { deltaTime = Time.deltaTime, direction = direction }.Schedule(this, inputDeps) :
+		new WalkJob { deltaTime = Time.deltaTime, direction = direction }.Schedule(this, inputDeps);
 	}
 }

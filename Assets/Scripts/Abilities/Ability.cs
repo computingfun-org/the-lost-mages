@@ -34,66 +34,103 @@ public interface IAbility {
 	void Trigger(InputAction.CallbackContext context);
 }
 
+public class NullAbility:IAbility {
+	public void Aim(InputAction.CallbackContext context) { }
+	public void AimPress(InputAction.CallbackContext context) { }
+	public void Deselect() { }
+	public void Select() { }
+	public void Trigger(InputAction.CallbackContext context) { }
+	public void Update() { }
+}
+
+public static class AbilityExtensions {
+}
+
 public class AbilitySystem:ComponentSystem {
 
-	IAbility ability;
+	IAbility ability = new NullAbility();
 	public IAbility Ability {
 		get => ability;
 		set {
-			if(ability != null) {
-				inputs.AbilityUse.Use.performed -= ability.Trigger;
-				inputs.AbilityUse.Aim.performed -= ability.Aim;
-				inputs.AbilityUse.AimPress.performed -= ability.AimPress;
+			if(Enabled) {
 				ability.Deselect();
+				value.Select();
 			}
-			if(value != null) {
-				ability = value;
-				ability.Select();
-				inputs.AbilityUse.AimPress.performed += ability.AimPress;
-				inputs.AbilityUse.Aim.performed += ability.Aim;
-				inputs.AbilityUse.Use.performed += ability.Trigger;
-			}
+			ability = value;
 		}
 	}
+
+	protected override void OnUpdate() => ability.Update();
+	void Aim(InputAction.CallbackContext context) => ability.Aim(context);
+	void AimPress(InputAction.CallbackContext context) => ability.AimPress(context);
+	void Trigger(InputAction.CallbackContext context) => ability.Trigger(context);
 
 	Input.Actions inputs;
 
 	protected override void OnCreate() {
 		base.OnCreate();
 		inputs = new Input.Actions();
+		inputs.AbilityUse.AimPress.performed += AimPress;
+		inputs.AbilityUse.Aim.performed += Aim;
+		inputs.AbilityUse.Use.performed += Trigger;
 	}
 
 	protected override void OnStartRunning() {
 		base.OnStartRunning();
 		inputs.Enable();
+		ability.Select();
 	}
 
 	protected override void OnStopRunning() {
 		base.OnStopRunning();
 		inputs.Disable();
+		ability.Deselect();
 	}
 
 	protected override void OnDestroy() {
 		base.OnDestroy();
-		Ability = null;
+		inputs.AbilityUse.Use.performed -= Trigger;
+		inputs.AbilityUse.Aim.performed -= Aim;
+		inputs.AbilityUse.AimPress.performed -= AimPress;
 	}
-
-	protected override void OnUpdate() => ability?.Update();	
 }
 
-public class AbilitySwitcherSystem:ComponentSystem {
+public class AbilitySelect4System:ComponentSystem {
 
-	public readonly IAbility[] abilities = new IAbility[4];
+	readonly IAbility[] abilities = new IAbility[4] {
+		new NullAbility(),
+		new NullAbility(),
+		new NullAbility(),
+		new NullAbility(),
+	};
 
-	public void Selected0() => abilitySystem.Ability = abilities[0];
-	public void Selected1() => abilitySystem.Ability = abilities[1];
-	public void Selected2() => abilitySystem.Ability = abilities[2];
-	public void Selected3() => abilitySystem.Ability = abilities[3];
+	public IAbility Ability0 {
+		get => abilities[0];
+		set => abilities[0] = value;
+	}
+	public void Select0() => abilitySystem.Ability = Ability0;
+	void Select0(InputAction.CallbackContext context) => Select0();
 
-	void Selected0(InputAction.CallbackContext context) => Selected0();
-	void Selected1(InputAction.CallbackContext context) => Selected1();
-	void Selected2(InputAction.CallbackContext context) => Selected2();
-	void Selected3(InputAction.CallbackContext context) => Selected3();
+	public IAbility Ability1 {
+		get => abilities[1];
+		set => abilities[1] = value;
+	}
+	public void Select1() => abilitySystem.Ability = Ability1;
+	void Select1(InputAction.CallbackContext context) => Select1();
+
+	public IAbility Ability2 {
+		get => abilities[2];
+		set => abilities[2] = value;
+	}
+	public void Select2() => abilitySystem.Ability = Ability2;
+	void Select2(InputAction.CallbackContext context) => Select2();
+
+	public IAbility Ability3 {
+		get => abilities[3];
+		set => abilities[3] = value;
+	}
+	public void Select3() => abilitySystem.Ability = Ability3;
+	void Select3(InputAction.CallbackContext context) => Select3();
 
 	AbilitySystem abilitySystem;
 	Input.Actions inputs;
@@ -102,10 +139,10 @@ public class AbilitySwitcherSystem:ComponentSystem {
 		base.OnCreate();
 		abilitySystem = World.GetOrCreateSystem<AbilitySystem>();
 		inputs = new Input.Actions();
-		inputs.AbilitySelect.One.performed += Selected0;
-		inputs.AbilitySelect.Two.performed += Selected1;
-		inputs.AbilitySelect.Three.performed += Selected2;
-		inputs.AbilitySelect.Four.performed += Selected3;
+		inputs.AbilitySelect.One.performed += Select0;
+		inputs.AbilitySelect.Two.performed += Select1;
+		inputs.AbilitySelect.Three.performed += Select2;
+		inputs.AbilitySelect.Four.performed += Select3;
 	}
 
 	protected override void OnStartRunning() {
@@ -120,10 +157,10 @@ public class AbilitySwitcherSystem:ComponentSystem {
 
 	protected override void OnDestroy() {
 		base.OnDestroy();
-		inputs.AbilitySelect.One.performed -= Selected0;
-		inputs.AbilitySelect.Two.performed -= Selected1;
-		inputs.AbilitySelect.Three.performed -= Selected2;
-		inputs.AbilitySelect.Four.performed -= Selected3;
+		inputs.AbilitySelect.One.performed -= Select0;
+		inputs.AbilitySelect.Two.performed -= Select1;
+		inputs.AbilitySelect.Three.performed -= Select2;
+		inputs.AbilitySelect.Four.performed -= Select3;
 	}
 
 	protected override void OnUpdate() { }

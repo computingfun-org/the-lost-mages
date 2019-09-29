@@ -2,6 +2,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.Jobs;
 
 /// <summary>
 /// Tag for a place to spawn a fireball.
@@ -12,32 +13,30 @@ public struct FireballSpawn:IComponentData {
 
 public class FireballSpawnSystem:ComponentSystem {
 
-    private UnityEngine.GameObject gObj;
+    private FireballEntity prefab;
     private EntityQuery query;
-    private EntityCommandBufferSystem commands;
+	private EntityCommandBufferSystem commands;
 
     protected override void OnCreate() {
         base.OnCreate();
-        gObj = UnityEngine.Resources.Load<UnityEngine.GameObject>("fireball");
+        prefab = UnityEngine.Resources.Load<FireballEntity>("fireball");
         query = GetEntityQuery(new ComponentType[] {
-            ComponentType.ReadWrite<FireballSpawn>(),
+            ComponentType.ReadOnly<FireballSpawn>(),
             ComponentType.ReadOnly<Translation>(),
         });
-        commands = World.Active.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+		commands = World.Active.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
 
-    protected override void OnUpdate() {
-        int len = query.CalculateEntityCount();
-        using(NativeArray<FireballSpawn> fireballs = query.ToComponentDataArray<FireballSpawn>(Allocator.TempJob))
-        using(NativeArray<Translation> translations = query.ToComponentDataArray<Translation>(Allocator.TempJob)) {
-            for(int i = 0; i < len; i++) {
-                UnityEngine.GameObject obj = UnityEngine.Object.Instantiate(gObj, translations[i].Value, quaternion.identity);
-				FireballEntity fireballEntity = obj.GetComponent<FireballEntity>();
-				Projectile projectile = fireballEntity.Projectile;
-				projectile.Angle = math.atan2(fireballs[i].Direction.x, fireballs[i].Direction.y);
-				fireballEntity.Projectile = projectile;
+	protected override void OnUpdate() {
+		using(NativeArray<FireballSpawn> spawns = query.ToComponentDataArray<FireballSpawn>(Allocator.TempJob))
+		using(NativeArray<Translation> translations = query.ToComponentDataArray<Translation>(Allocator.TempJob)) {
+			for(int i = 0, len = spawns.Length; i < len; i++) {
+				FireballEntity fe = UnityEngine.Object.Instantiate(prefab, translations[i].Value, quaternion.identity);
+				Projectile p = fe.Projectile;
+				p.Angle = math.atan2(spawns[i].Direction.x, spawns[i].Direction.y);
+				fe.Projectile = p;
 			}
-        }
-        commands.CreateCommandBuffer().RemoveComponent(query, ComponentType.ReadWrite<FireballSpawn>());
-    }
+		}
+		commands.CreateCommandBuffer().RemoveComponent(query, typeof(FireballSpawn));
+	}
 }

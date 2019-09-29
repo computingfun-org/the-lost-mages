@@ -236,6 +236,33 @@ namespace Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""fc7f7bbc-21b4-46c6-a717-5a5c30c3c864"",
+            ""actions"": [
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""a624c672-6693-4d2d-a0bb-8e3b94c4ac05"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4b411ca1-62c8-4894-87ad-15d283f6da98"",
+                    ""path"": ""<Gamepad>/dpad/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -258,6 +285,9 @@ namespace Input
             // Build
             m_Build = asset.GetActionMap("Build");
             m_Build_Menu = m_Build.GetAction("Menu");
+            // Camera
+            m_Camera = asset.GetActionMap("Camera");
+            m_Camera_Zoom = m_Camera.GetAction("Zoom");
         }
 
         ~Actions()
@@ -483,6 +513,39 @@ namespace Input
             }
         }
         public BuildActions @Build => new BuildActions(this);
+
+        // Camera
+        private readonly InputActionMap m_Camera;
+        private ICameraActions m_CameraActionsCallbackInterface;
+        private readonly InputAction m_Camera_Zoom;
+        public struct CameraActions
+        {
+            private Actions m_Wrapper;
+            public CameraActions(Actions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
+            public InputActionMap Get() { return m_Wrapper.m_Camera; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+            public void SetCallbacks(ICameraActions instance)
+            {
+                if (m_Wrapper.m_CameraActionsCallbackInterface != null)
+                {
+                    Zoom.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
+                    Zoom.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
+                    Zoom.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
+                }
+                m_Wrapper.m_CameraActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    Zoom.started += instance.OnZoom;
+                    Zoom.performed += instance.OnZoom;
+                    Zoom.canceled += instance.OnZoom;
+                }
+            }
+        }
+        public CameraActions @Camera => new CameraActions(this);
         public interface IMovementActions
         {
             void OnMove(InputAction.CallbackContext context);
@@ -504,6 +567,10 @@ namespace Input
         public interface IBuildActions
         {
             void OnMenu(InputAction.CallbackContext context);
+        }
+        public interface ICameraActions
+        {
+            void OnZoom(InputAction.CallbackContext context);
         }
     }
 }

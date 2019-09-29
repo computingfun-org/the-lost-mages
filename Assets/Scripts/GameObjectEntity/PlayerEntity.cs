@@ -2,8 +2,8 @@
 
 public class PlayerEntity:GOEntity {
 
-	public const float Walk = 5;
-	public const float Run = 10;
+	public const float Walk = 10f;
+	public const float Run = 15f;
 
 	public Movement Movement {
 		get => GetComponentData<Movement>();
