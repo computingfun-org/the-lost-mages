@@ -2,11 +2,13 @@
 
 public class PlayerEntity:GOEntity {
 
-	public const float Walk = 10f;
-	public const float Run = 15f;
-
 	public Movement Movement {
 		get => GetComponentData<Movement>();
+		set => SetComponentData(value);
+	}
+
+	public Dash Dash {
+		get => GetComponentData<Dash>();
 		set => SetComponentData(value);
 	}
 
@@ -23,7 +25,14 @@ public class PlayerEntity:GOEntity {
 	public override void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem) {
 		base.Convert(entity, dstManager, conversionSystem);
 		AddComponentData(new Player { });
-		AddComponentData(new Movement { WalkSpeed = Walk, RunSpeed = Run });
+		AddComponentData(new Movement { Speed = 10f });
+		AddComponentData(new Dash {
+			CoolDown = new CoolDown {
+				Triggered = float.NegativeInfinity,
+				Value = 1f,
+			},
+			Power = 15f
+		});
 		AddComponentData(new Health { });
 		AddComponentData(new Mana { });
 	}

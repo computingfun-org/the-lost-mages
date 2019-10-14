@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BlueprintAbility:IAbility {
+public class BlueprintAbility {
 
 	public BlueprintAbility(string prefabPath, Transform parent) {
 		prefab = Resources.Load<Blueprint>(prefabPath);

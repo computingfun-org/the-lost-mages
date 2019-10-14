@@ -1,40 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Entities;
 
-public class FireballAbility:IAbility {
+public struct FireballAbility:IAbility {
 
-	public FireballAbility(Entity user, EntityManager userManager, CoolDown cooldown) {
-		entity = user;
-		entityManager = userManager;
-		cd = cooldown;
-	}
+	public PlayerEntity Player;
+	public CoolDown CD;
+	public bool Use;
 
-	Entity entity;
-    EntityManager entityManager;
-	CoolDown cd;
+	public void Performed(InputAction.CallbackContext context)
+		=> Use = AbilityExtensions.Pressed(context);
 
-    Vector2 aim = new Vector2 { x = 1 };
-    public void Aim(InputAction.CallbackContext context) {
-        Vector2 value = context.ReadValue<Vector2>();
-		if (value != Vector2.zero) {
-			aim = value;
+	public void Update() {
+		if(!Use) {
+			return;
 		}
-    }
 
-	public void Deselect() { }
-    public void Select() { }
+		float time = Time.time;
+		if (!CD.IsCooled(time)) {
+			return;
+		}
 
-    public void Trigger(InputAction.CallbackContext context) {
-        float time = Time.time;
-        if (!cd.IsCooled(time)) {
-            return;
-        }
-        entityManager.AddComponentData(entity, new FireballSpawn { Direction = aim });
-        cd.Trigger(time);
-    }
-
-    public void Update() { }
-
-	public void AimPress(InputAction.CallbackContext context) {	}
+		Player.AddComponentData(new FireballSpawn { });
+		CD.Trigger(time);
+	}
 }

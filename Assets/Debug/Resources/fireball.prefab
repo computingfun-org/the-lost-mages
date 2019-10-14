@@ -160,4 +160,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 4432700000826548347}
-  body: {fileID: 3260868082325094409}
+  rigidbody2D: {fileID: 3260868082325094409}

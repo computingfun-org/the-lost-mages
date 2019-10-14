@@ -6,6 +6,7 @@ public class BuildMenuItem:MonoBehaviour {
 	public IAbility Ability = new NullAbility();
 
 	[SerializeField]
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
 	string blueprintPath = "";
 
 	[SerializeField]
@@ -18,7 +19,7 @@ public class BuildMenuItem:MonoBehaviour {
 	RawImage image = null;
 
 	void Awake() {
-		Ability = new BlueprintAbility(blueprintPath, FindObjectOfType<PlayerEntity>().transform);
+		//Ability = new BlueprintAbility(blueprintPath, FindObjectOfType<PlayerEntity>().transform);
 	}
 
 	bool selected;

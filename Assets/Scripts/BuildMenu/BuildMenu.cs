@@ -1,19 +1,20 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using UnityEngine.InputSystem;
+/*
+public class BuildMenuSystem:ComponentSystem {
 
-public class BuildMenuSystem:ComponentSystem, IAbility {
+	private void BuildPerformed(InputAction.CallbackContext context) {
+	}
 
 	Inputs.Actions inputs;
-	AbilitySystem abilitySystem;
 	EntityQuery itemsQuery;
 	EntityQuery displayQuery;
 
 	protected override void OnCreate() {
 		base.OnCreate();
 		inputs = new Inputs.Actions();
-		inputs.Build.Menu.performed += Performed;
-		abilitySystem = World.GetOrCreateSystem<AbilitySystem>();
+		inputs.Action.Build.performed += BuildPerformed;
 		itemsQuery = GetEntityQuery(new ComponentType[] {
 			ComponentType.ReadOnly<BuildMenuItem>(),
 		});
@@ -34,13 +35,8 @@ public class BuildMenuSystem:ComponentSystem, IAbility {
 
 	protected override void OnDestroy() {
 		base.OnDestroy();
-		inputs.Build.Menu.performed -= Performed;
+		inputs.Action.Build.performed -= BuildPerformed;
 	}
-
-	protected override void OnUpdate() { }
-
-	void Performed(InputAction.CallbackContext context) =>
-		abilitySystem.Ability = abilitySystem.Ability is BuildMenuSystem ? new NullAbility { } : (IAbility)this;
 
 	#region IAbility
 
@@ -94,3 +90,4 @@ public class BuildMenuSystem:ComponentSystem, IAbility {
 
 	#endregion
 }
+*/
