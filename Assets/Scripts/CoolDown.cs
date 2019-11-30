@@ -1,5 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 
+[Serializable]
 public struct CoolDown {
 
     /// <summary>
@@ -22,10 +25,7 @@ public struct CoolDown {
     /// How long until cool down is over.
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float UntilCooled(float time) {
-        float until = WhenCooled() - time;
-        return until > 0 ? until : 0;
-    }
+    public float UntilCooled(float time) => math.max(WhenCooled() - time, 0);
 
     /// <summary>
     /// Is cool down over.

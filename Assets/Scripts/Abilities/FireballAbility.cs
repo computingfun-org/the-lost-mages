@@ -1,26 +1,27 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using Unity.Entities;
+using UnityEngine;
 
-public struct FireballAbility:IAbility {
+public class FireballAbility:IPlayerAbility {
 
-	public PlayerEntity Player;
-	public CoolDown CD;
-	public bool Use;
+	readonly EntityManager manager;
+	readonly Transform source;
+	CoolDown cd;
 
-	public void Performed(InputAction.CallbackContext context)
-		=> Use = AbilityExtensions.Pressed(context);
+	public FireballAbility(EntityManager manager, Transform source, CoolDown cd) {
+		this.manager = manager;
+		this.source = source;
+		this.cd = cd;
+	}
 
-	public void Update() {
-		if(!Use) {
-			return;
-		}
+	public void Equip() { }
 
+	public void Unequip() { }
+
+	public void Update(float button) {
 		float time = Time.time;
-		if (!CD.IsCooled(time)) {
-			return;
+		if (button != 0 && cd.IsCooled(time)) {
+			ResourceSpawner<FireballSpawner>.CreateSpawner(manager, source, true);
+			cd.Trigger(time);
 		}
-
-		Player.AddComponentData(new FireballSpawn { });
-		CD.Trigger(time);
 	}
 }

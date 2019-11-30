@@ -1,29 +1,38 @@
 ﻿using System;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEngine;
 
 [Serializable]
 public struct Projectile:IComponentData {
 	public float Speed;
 }
 
-public class ProjectileSystem:JobComponentSystem {
+public class ProjectileSystem:ComponentSystem {
 
-	struct ProjectileJob:IJobForEach<Projectile, MoveRigidbody2D> {
-		public float deltaTime;
-		public void Execute([ReadOnly] ref Projectile p, ref MoveRigidbody2D body) {
-			float speed = deltaTime * p.Speed;
-			float angle = math.radians(body.Rotation);
-			body.Position.x += math.cos(angle) * speed;
-			body.Position.y += math.sin(angle) * speed;
-		}
+	EntityQuery query;
+
+	protected override void OnCreate() {
+		base.OnCreate();
+		query = GetEntityQuery(new ComponentType[] {
+			ComponentType.ReadOnly<Projectile>(),
+			ComponentType.ReadWrite<Rigidbody2D>(),
+		});
 	}
 
-	protected override JobHandle OnUpdate(JobHandle inputDeps) {
-		return new ProjectileJob {
-			deltaTime = UnityEngine.Time.deltaTime,
-		}.Schedule(this, inputDeps);
+	protected override void OnUpdate() {
+		float deltaTime = Time.deltaTime;
+		using(NativeArray<Projectile> proj = query.ToComponentDataArray<Projectile>(Allocator.TempJob)) {
+			Rigidbody2D[] bodies = query.ToComponentArray<Rigidbody2D>();
+			for (int i = 0, len = proj.Length; i < len; i++) {
+				float speed = deltaTime * proj[i].Speed;
+				float angle = math.radians(bodies[i].rotation);
+				Vector2 pos = bodies[i].position;
+				pos.x += math.cos(angle) * speed;
+				pos.y += math.sin(angle) * speed;
+				bodies[i].MovePosition(pos);
+			}
+		}
 	}
 }

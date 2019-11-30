@@ -19,7 +19,15 @@ public class Blueprint : MonoBehaviour {
         baseColor = sprite.color;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+	void OnEnable() {
+		gameObject.SetActive(true);
+	}
+
+	void OnDisable() {
+		gameObject.SetActive(false);
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision) {
         overlaps++;
         sprite.color = overlapColor;
     }
@@ -35,7 +43,7 @@ public class Blueprint : MonoBehaviour {
         if (Overlapping) {
             return false;
         }
-        Instantiate(prefab, transform.position, Quaternion.identity);
+        Instantiate(prefab, transform.position, transform.rotation);
         return true;
     }
 
