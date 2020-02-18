@@ -31,18 +31,19 @@ public class PlayerAbilitySystem:ComponentSystem {
 		new NullPlayerAbility(),
 	};
 
-	float[] buttons = new float[slotsLen];
+	readonly float[] buttons = new float[slotsLen];
 
 	Inputs.Actions.GameplayActions actions;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	void SetSlot(int i, IPlayerAbility pa) {
+		buttons[i] = 0;
 		slots[i].Unequip();
-		slots[i] = pa;
+		slots[i] = pa ?? new NullPlayerAbility();
 		slots[i].Equip();
 	}
 
-	/// <summary> The player ability in slot 1. Do NOT set to null. Use NullPlayerAbility to make slot empty. </summary>
+	/// <summary> The player ability in slot 1. Use null or NullPlayerAbility to make slot empty. </summary>
 	public IPlayerAbility Ability1 {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get => slots[0];
@@ -50,7 +51,7 @@ public class PlayerAbilitySystem:ComponentSystem {
 		set => SetSlot(0, value);
 	}
 
-	/// <summary> The player ability in slot 2. Do NOT set to null. Use NullPlayerAbility to make slot empty. </summary>
+	/// <summary> The player ability in slot 2. Use null or NullPlayerAbility to make slot empty. </summary>
 	public IPlayerAbility Ability2 {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get => slots[1];
@@ -58,7 +59,7 @@ public class PlayerAbilitySystem:ComponentSystem {
 		set => SetSlot(1, value);
 	}
 
-	/// <summary> The player ability in slot 3. Do NOT set to null. Use NullPlayerAbility to make slot empty. </summary>
+	/// <summary> The player ability in slot 3. Use null or NullPlayerAbility to make slot empty. </summary>
 	public IPlayerAbility Ability3 {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get => slots[2];
@@ -66,12 +67,12 @@ public class PlayerAbilitySystem:ComponentSystem {
 		set => SetSlot(2, value);
 	}
 
-	/// <summary> The player ability in slot 4. Do NOT set to null. Use NullPlayerAbility to make slot empty. </summary>
+	/// <summary> The player ability in slot 4. Use null or NullPlayerAbility to make slot empty. </summary>
 	public IPlayerAbility Ability4 {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get => slots[3];
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		set => SetSlot(0, value);
+		set => SetSlot(3, value);
 	}
 
 	void Performed1(InputAction.CallbackContext context) =>
@@ -108,5 +109,9 @@ public class PlayerAbilitySystem:ComponentSystem {
 		actions.Ability2.performed -= Performed2;
 		actions.Ability3.performed -= Performed3;
 		actions.Ability4.performed -= Performed4;
+
+		for(int i = 0; i < slotsLen; i++) {
+			SetSlot(i, new NullPlayerAbility());
+		}
 	}
 }

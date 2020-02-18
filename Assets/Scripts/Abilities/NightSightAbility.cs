@@ -3,11 +3,11 @@ using UnityEngine.Experimental.Rendering.LWRP;
 
 public class NightSightAbility:IPlayerAbility {
 
-	Light2D light;
+	UnityEngine.Experimental.Rendering.Universal.Light2D light;
 
 	public void Equip() {
-		light = new GameObject().AddComponent<Light2D>();
-		light.lightType = Light2D.LightType.Global;
+		light = new GameObject().AddComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
+		light.lightType = UnityEngine.Experimental.Rendering.Universal.Light2D.LightType.Global;
 		light.color = new Color(0, 1, 0);
 	}
 

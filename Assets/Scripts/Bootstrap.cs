@@ -13,7 +13,6 @@ public class Bootstrap:MonoBehaviour {
 	// entities & objects
 	Entity inputMode;
 	public Entity player;
-	public CrosshairSight crosshairSight;
 
 	void Start() {
 		// manager
@@ -30,8 +29,9 @@ public class Bootstrap:MonoBehaviour {
 
 		// late setups
 		abilitySystem.Ability1 = new FireballAbility(entityManager, entityManager.GetComponentObject<Transform>(player), new CoolDown { Value = 0.3f } );
-		abilitySystem.Ability2 = new IceWallAbility(crosshairSight.transform, entityManager, new CoolDown { Value = 0.5f });
+		//abilitySystem.Ability2 = new IceWallAbility(crosshairSight.transform, entityManager, new CoolDown { Value = 0.5f });
 		abilitySystem.Ability3 = new NightSightAbility();
+		abilitySystem.Ability4 = new TorchAbility(entityManager, entityManager.GetComponentObject<Transform>(player), new CoolDown { Value = 0.3f });
 
 		Inputs.Actions actions = new Inputs.Actions();
 		actions.Gameplay.Build.performed += Build_performed;

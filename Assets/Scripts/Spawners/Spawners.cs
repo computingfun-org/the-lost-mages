@@ -13,3 +13,9 @@ public class IceWallSpawnSystem:ResourceSpawnerSystem<IceWallSpawner> {
 	protected override Object LoadResource()
 		=> Resources.Load("icewall");
 }
+
+public struct TorchSpawner:IComponentData { }
+public class TorchSpawnerSpawnSystem:ResourceSpawnerSystem<TorchSpawner> {
+	protected override Object LoadResource()
+		=> Resources.Load("torch");
+}

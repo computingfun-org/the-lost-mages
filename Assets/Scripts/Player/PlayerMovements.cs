@@ -5,11 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public struct Movement:IComponentData {
-	public float Speed;
-}
-
-[Serializable]
 public struct Dash:IComponentData {
 	public float Power;
 	public CoolDown CoolDown;

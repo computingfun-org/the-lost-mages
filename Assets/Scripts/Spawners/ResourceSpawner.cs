@@ -10,22 +10,6 @@ using UnityEngine;
 /// </summary>
 public struct DestoryResourceSpawner:IComponentData { }
 
-public static class ResourceSpawner<T> where T : struct, IComponentData {
-
-	public static Entity CreateSpawner(EntityManager manager, LocalToWorld ltw, bool destory) {
-		Entity entity = manager.CreateEntity(new ComponentType[] { typeof(T) });
-		manager.AddComponentData(entity, ltw);
-		if(destory) {
-			manager.AddComponentData(entity, new DestoryResourceSpawner { });
-		}
-		return entity;
-	}
-
-	public static Entity CreateSpawner(EntityManager manager, Transform t, bool destory) {
-		return CreateSpawner(manager, new LocalToWorld { Value = t.localToWorldMatrix }, destory);
-	}
-}
-
 public abstract class ResourceSpawnerBehaviour<T>:MonoBehaviour where T : struct, IComponentData {
 
 	public virtual bool CanSpawn => true;
@@ -35,7 +19,11 @@ public abstract class ResourceSpawnerBehaviour<T>:MonoBehaviour where T : struct
 		if (!CanSpawn) {
 			return false;
 		}
-		ResourceSpawner<T>.CreateSpawner(manager, transform, DestroyEntity);
+		Entity e = manager.CreateEntity(new ComponentType[] { typeof(T) });
+		manager.AddComponentData(e, new LocalToWorld { Value = transform.localToWorldMatrix });
+		if (DestroyEntity) {
+			manager.AddComponentData(e, new DestoryResourceSpawner { });
+		}
 		return true;
 	}
 }

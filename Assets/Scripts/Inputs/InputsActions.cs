@@ -1,5 +1,6 @@
 // GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Inputs/InputsActions.inputactions'
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
@@ -7,10 +8,10 @@ using UnityEngine.InputSystem.Utilities;
 
 namespace Inputs
 {
-    public class Actions : IInputActionCollection
+    public class @Actions : IInputActionCollection, IDisposable
     {
         private InputActionAsset asset;
-        public Actions()
+        public @Actions()
         {
             asset = InputActionAsset.FromJson(@"{
     ""name"": ""InputsActions"",
@@ -530,25 +531,25 @@ namespace Inputs
     ]
 }");
             // Gameplay
-            m_Gameplay = asset.GetActionMap("Gameplay");
-            m_Gameplay_Move = m_Gameplay.GetAction("Move");
-            m_Gameplay_Dash = m_Gameplay.GetAction("Dash");
-            m_Gameplay_Look = m_Gameplay.GetAction("Look");
-            m_Gameplay_Zoom = m_Gameplay.GetAction("Zoom");
-            m_Gameplay_Action = m_Gameplay.GetAction("Action");
-            m_Gameplay_Build = m_Gameplay.GetAction("Build");
-            m_Gameplay_Ability1 = m_Gameplay.GetAction("Ability1");
-            m_Gameplay_Ability2 = m_Gameplay.GetAction("Ability2");
-            m_Gameplay_Ability3 = m_Gameplay.GetAction("Ability3");
-            m_Gameplay_Ability4 = m_Gameplay.GetAction("Ability4");
-            m_Gameplay_Pause = m_Gameplay.GetAction("Pause");
+            m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+            m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+            m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
+            m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
+            m_Gameplay_Zoom = m_Gameplay.FindAction("Zoom", throwIfNotFound: true);
+            m_Gameplay_Action = m_Gameplay.FindAction("Action", throwIfNotFound: true);
+            m_Gameplay_Build = m_Gameplay.FindAction("Build", throwIfNotFound: true);
+            m_Gameplay_Ability1 = m_Gameplay.FindAction("Ability1", throwIfNotFound: true);
+            m_Gameplay_Ability2 = m_Gameplay.FindAction("Ability2", throwIfNotFound: true);
+            m_Gameplay_Ability3 = m_Gameplay.FindAction("Ability3", throwIfNotFound: true);
+            m_Gameplay_Ability4 = m_Gameplay.FindAction("Ability4", throwIfNotFound: true);
+            m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
             // BuildMenu
-            m_BuildMenu = asset.GetActionMap("BuildMenu");
-            m_BuildMenu_Move = m_BuildMenu.GetAction("Move");
-            m_BuildMenu_Select = m_BuildMenu.GetAction("Select");
+            m_BuildMenu = asset.FindActionMap("BuildMenu", throwIfNotFound: true);
+            m_BuildMenu_Move = m_BuildMenu.FindAction("Move", throwIfNotFound: true);
+            m_BuildMenu_Select = m_BuildMenu.FindAction("Select", throwIfNotFound: true);
         }
 
-        ~Actions()
+        public void Dispose()
         {
             UnityEngine.Object.Destroy(asset);
         }
@@ -608,8 +609,8 @@ namespace Inputs
         private readonly InputAction m_Gameplay_Pause;
         public struct GameplayActions
         {
-            private Actions m_Wrapper;
-            public GameplayActions(Actions wrapper) { m_Wrapper = wrapper; }
+            private @Actions m_Wrapper;
+            public GameplayActions(@Actions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
             public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
             public InputAction @Look => m_Wrapper.m_Gameplay_Look;
@@ -630,76 +631,76 @@ namespace Inputs
             {
                 if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
                 {
-                    Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                    Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                    Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                    Dash.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
-                    Dash.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
-                    Dash.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
-                    Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                    Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                    Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                    Zoom.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoom;
-                    Zoom.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoom;
-                    Zoom.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoom;
-                    Action.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
-                    Action.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
-                    Action.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
-                    Build.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBuild;
-                    Build.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBuild;
-                    Build.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBuild;
-                    Ability1.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility1;
-                    Ability1.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility1;
-                    Ability1.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility1;
-                    Ability2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility2;
-                    Ability2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility2;
-                    Ability2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility2;
-                    Ability3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility3;
-                    Ability3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility3;
-                    Ability3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility3;
-                    Ability4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility4;
-                    Ability4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility4;
-                    Ability4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility4;
-                    Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
-                    Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
-                    Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                    @Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                    @Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                    @Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                    @Dash.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
+                    @Dash.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
+                    @Dash.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
+                    @Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
+                    @Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
+                    @Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
+                    @Zoom.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoom;
+                    @Zoom.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoom;
+                    @Zoom.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoom;
+                    @Action.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                    @Action.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                    @Action.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                    @Build.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBuild;
+                    @Build.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBuild;
+                    @Build.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBuild;
+                    @Ability1.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility1;
+                    @Ability1.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility1;
+                    @Ability1.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility1;
+                    @Ability2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility2;
+                    @Ability2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility2;
+                    @Ability2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility2;
+                    @Ability3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility3;
+                    @Ability3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility3;
+                    @Ability3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility3;
+                    @Ability4.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility4;
+                    @Ability4.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility4;
+                    @Ability4.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAbility4;
+                    @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 }
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    Move.started += instance.OnMove;
-                    Move.performed += instance.OnMove;
-                    Move.canceled += instance.OnMove;
-                    Dash.started += instance.OnDash;
-                    Dash.performed += instance.OnDash;
-                    Dash.canceled += instance.OnDash;
-                    Look.started += instance.OnLook;
-                    Look.performed += instance.OnLook;
-                    Look.canceled += instance.OnLook;
-                    Zoom.started += instance.OnZoom;
-                    Zoom.performed += instance.OnZoom;
-                    Zoom.canceled += instance.OnZoom;
-                    Action.started += instance.OnAction;
-                    Action.performed += instance.OnAction;
-                    Action.canceled += instance.OnAction;
-                    Build.started += instance.OnBuild;
-                    Build.performed += instance.OnBuild;
-                    Build.canceled += instance.OnBuild;
-                    Ability1.started += instance.OnAbility1;
-                    Ability1.performed += instance.OnAbility1;
-                    Ability1.canceled += instance.OnAbility1;
-                    Ability2.started += instance.OnAbility2;
-                    Ability2.performed += instance.OnAbility2;
-                    Ability2.canceled += instance.OnAbility2;
-                    Ability3.started += instance.OnAbility3;
-                    Ability3.performed += instance.OnAbility3;
-                    Ability3.canceled += instance.OnAbility3;
-                    Ability4.started += instance.OnAbility4;
-                    Ability4.performed += instance.OnAbility4;
-                    Ability4.canceled += instance.OnAbility4;
-                    Pause.started += instance.OnPause;
-                    Pause.performed += instance.OnPause;
-                    Pause.canceled += instance.OnPause;
+                    @Move.started += instance.OnMove;
+                    @Move.performed += instance.OnMove;
+                    @Move.canceled += instance.OnMove;
+                    @Dash.started += instance.OnDash;
+                    @Dash.performed += instance.OnDash;
+                    @Dash.canceled += instance.OnDash;
+                    @Look.started += instance.OnLook;
+                    @Look.performed += instance.OnLook;
+                    @Look.canceled += instance.OnLook;
+                    @Zoom.started += instance.OnZoom;
+                    @Zoom.performed += instance.OnZoom;
+                    @Zoom.canceled += instance.OnZoom;
+                    @Action.started += instance.OnAction;
+                    @Action.performed += instance.OnAction;
+                    @Action.canceled += instance.OnAction;
+                    @Build.started += instance.OnBuild;
+                    @Build.performed += instance.OnBuild;
+                    @Build.canceled += instance.OnBuild;
+                    @Ability1.started += instance.OnAbility1;
+                    @Ability1.performed += instance.OnAbility1;
+                    @Ability1.canceled += instance.OnAbility1;
+                    @Ability2.started += instance.OnAbility2;
+                    @Ability2.performed += instance.OnAbility2;
+                    @Ability2.canceled += instance.OnAbility2;
+                    @Ability3.started += instance.OnAbility3;
+                    @Ability3.performed += instance.OnAbility3;
+                    @Ability3.canceled += instance.OnAbility3;
+                    @Ability4.started += instance.OnAbility4;
+                    @Ability4.performed += instance.OnAbility4;
+                    @Ability4.canceled += instance.OnAbility4;
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
                 }
             }
         }
@@ -712,8 +713,8 @@ namespace Inputs
         private readonly InputAction m_BuildMenu_Select;
         public struct BuildMenuActions
         {
-            private Actions m_Wrapper;
-            public BuildMenuActions(Actions wrapper) { m_Wrapper = wrapper; }
+            private @Actions m_Wrapper;
+            public BuildMenuActions(@Actions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_BuildMenu_Move;
             public InputAction @Select => m_Wrapper.m_BuildMenu_Select;
             public InputActionMap Get() { return m_Wrapper.m_BuildMenu; }
@@ -725,22 +726,22 @@ namespace Inputs
             {
                 if (m_Wrapper.m_BuildMenuActionsCallbackInterface != null)
                 {
-                    Move.started -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnMove;
-                    Move.performed -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnMove;
-                    Move.canceled -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnMove;
-                    Select.started -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnSelect;
-                    Select.performed -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnSelect;
-                    Select.canceled -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnSelect;
+                    @Move.started -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnMove;
+                    @Move.performed -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnMove;
+                    @Move.canceled -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnMove;
+                    @Select.started -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnSelect;
+                    @Select.performed -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnSelect;
+                    @Select.canceled -= m_Wrapper.m_BuildMenuActionsCallbackInterface.OnSelect;
                 }
                 m_Wrapper.m_BuildMenuActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    Move.started += instance.OnMove;
-                    Move.performed += instance.OnMove;
-                    Move.canceled += instance.OnMove;
-                    Select.started += instance.OnSelect;
-                    Select.performed += instance.OnSelect;
-                    Select.canceled += instance.OnSelect;
+                    @Move.started += instance.OnMove;
+                    @Move.performed += instance.OnMove;
+                    @Move.canceled += instance.OnMove;
+                    @Select.started += instance.OnSelect;
+                    @Select.performed += instance.OnSelect;
+                    @Select.canceled += instance.OnSelect;
                 }
             }
         }
@@ -750,7 +751,7 @@ namespace Inputs
         {
             get
             {
-                if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.GetControlSchemeIndex("Gamepad");
+                if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
                 return asset.controlSchemes[m_GamepadSchemeIndex];
             }
         }
@@ -759,7 +760,7 @@ namespace Inputs
         {
             get
             {
-                if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.GetControlSchemeIndex("Keyboard&Mouse");
+                if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
                 return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
             }
         }
